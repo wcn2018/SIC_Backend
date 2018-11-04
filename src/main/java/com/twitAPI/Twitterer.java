@@ -1,23 +1,17 @@
 package com.twitAPI;
-
-import twitter4j.Paging;
-import twitter4j.Status;
-import twitter4j.Twitter;
-import twitter4j.TwitterFactory;
-import twitter4j.TwitterException;
-
+import twitter4j.*;
 import java.io.IOException;
 import java.io.PrintStream;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Twitterer {
     public static int CAPACITY = 60;
-
     private Twitter twitter;
     private PrintStream consolePrint;
     private List<Status> statuses;
+    private List<IDs> follows;
+    private List<IDs> followers;
     //private List<Status> retweets;
 
     public Twitterer() {
@@ -36,6 +30,9 @@ public class Twitterer {
         twitter = TwitterFactory.getSingleton();
         consolePrint = console;
         statuses = new ArrayList<Status>();
+        follows = new ArrayList<IDs>();
+        followers = new ArrayList<IDs>();
+
         //retweets = new ArrayList<Status>();
     }
 
@@ -49,12 +46,17 @@ public class Twitterer {
     @SuppressWarnings("unchecked")
     public void queryHandle(String handle) throws TwitterException, IOException {
         statuses.clear();// queryHandle will be looped, clear statuses each time or else it's a mess
+        follows.clear();//same
+        followers.clear();
+
         getTweets(handle);
         int numTweets = statuses.size();
         while (numTweets > 0) {
             numTweets--;
             System.out.println("Tweet" + numTweets + ": " + statuses.get(numTweets).getText());
         }
+
+        getNetwork(handle);//creates arraylist of follows and followers
     }
 
     /**
@@ -65,11 +67,11 @@ public class Twitterer {
      */
     public void getTweets(String handle) throws TwitterException, IOException {
         //total tweets grabbed = p*count in the Paging instance
-        Paging page = new Paging(1, 20); // grabs 20 tweets per page
+        Paging page = new Paging(1, 20); // grabs max 20 per page
         int p = 1;
-        while (p <= CAPACITY / 20) {
+        while (p <= 3) {
             page.setPage(p);
-            statuses.addAll(twitter.getUserTimeline(handle));
+            statuses.addAll(twitter.getUserTimeline(handle, page));
             //retweets.addAll(twitter.getRetweetsOfMe());
             p++;
         }
@@ -77,5 +79,13 @@ public class Twitterer {
 
     public List<Status> getStatuses() {
         return statuses;
+    }
+
+    /**
+     * Another helper method. This one gets the user's followers
+     */
+    private void getNetwork(String handle) throws TwitterException, IOException {
+        follows.add(twitter.getFriendsIDs(handle, -1));
+        followers.add(twitter.getFollowersIDs(handle, -1));
     }
 }

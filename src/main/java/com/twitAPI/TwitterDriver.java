@@ -3,7 +3,7 @@ package com.twitAPI;
  * Twitter Driver and Client
  *
  * @author Ria Galanos
- * @author Tony Potter
+ * @author Tony Potter <<<<huge credits to this guy for writing the original Twitterer
  * @author WIlliam Chen, adapted for GT hackathon.
  * Original idea by Ria Galanos, whose documentation and source can be found at
  * https://github.com/riagalanos/cs1-twitter
