@@ -13,6 +13,8 @@ public class Twitterer {
     private List<IDs> follows;
     private List<IDs> followers;
     //private List<Status> retweets;
+    private List<String> offerKeywords = new ArrayList<String>();
+
 
     public Twitterer() {
         twitter = TwitterFactory.getSingleton();
@@ -60,7 +62,7 @@ public class Twitterer {
     }
 
     /**
-     * This helper method fetches the most recent 2,000 tweets of a particular user's handle and
+     * This helper method fetches the most recent 2,000 (or however many) tweets of a particular user's handle and
      * stores them in an arrayList of Status objects.  Populates statuses.
      *
      * @param *String the Twitter handle (username) without the @sign
@@ -75,6 +77,11 @@ public class Twitterer {
             //retweets.addAll(twitter.getRetweetsOfMe());
             p++;
         }
+        for (int i=0;i<statuses.size();i++){
+            if (statuses.get(i).isRetweet()){
+                statuses.remove(i);
+            }
+        }
     }
 
     public List<Status> getStatuses() {
@@ -87,5 +94,8 @@ public class Twitterer {
     private void getNetwork(String handle) throws TwitterException, IOException {
         follows.add(twitter.getFriendsIDs(handle, -1));
         followers.add(twitter.getFollowersIDs(handle, -1));
+    }
+    public void getUniversities(){
+
     }
 }

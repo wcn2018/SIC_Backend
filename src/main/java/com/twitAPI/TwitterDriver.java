@@ -22,7 +22,6 @@ import java.util.Scanner;
 public class TwitterDriver {
     private static PrintStream consolePrint;
 
-    /*
     public static void main(String[] args) throws TwitterException, IOException {
         // set up classpath and properties file
 
@@ -40,8 +39,6 @@ public class TwitterDriver {
             twitter_handle = scan.next();
         }
     }
-
-    */
 
 }
          
