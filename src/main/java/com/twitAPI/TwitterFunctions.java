@@ -60,7 +60,7 @@ public class TwitterFunctions {
             System.out.print("test3");
             if(heightOrGrad(a)){
                 System.out.print("test4");
-                handles.add(a.getName());
+                handles.add(a.getScreenName());
             }
         }
         return handles;
@@ -78,15 +78,17 @@ public class TwitterFunctions {
     }
 
     /*************** Interest Unis ****************/
-    public List<String> getProspects(String handle){
+    public List<String> getProspects(String handle){ //call per athlete in list of highschool athletes. Finds their prospect schools. Returns tweet text.
         List<Status> tweets = getTweetsByHandle(handle);
         List<String> uniTweets= new ArrayList<String>();
         for (int i=0;i<tweets.size();i++) {
             Status a = tweets.get(i);
             String tweet = a.getText();
+            System.out.print("test1");
             if (isOffer(tweet)) {
-                String b = String.valueOf(a);
-                uniTweets.add(tweets.size() + 1, b);
+                System.out.print("test2");
+                String b = String.valueOf(a.getId());
+                uniTweets.add(b);
             }
         }
         return uniTweets;
@@ -121,7 +123,14 @@ public class TwitterFunctions {
 
         List<String> listS = new ArrayList<String>(Twitterer.CAPACITY);
         List<String> tester = new ArrayList<String>();
-        System.out.print(tf.highSchoolOnlyHandles("scoutPROcoach"));
+        List<String> testlist = tf.highSchoolOnlyHandles("scoutPROcoach");
+        System.out.print(testlist);
+        for(int i = 0; i<=testlist.size();i++){
+            String handle = testlist.get(i);
+            System.out.print(tf.getProspects(handle));
+        }
+
+        //System.out.print(tf.getProspects("EscoJamaal"));
         //tester = (tf.highSchoolOnlyHandles("scoutPROcoach"));
 
         /*for (Status s : list) {
