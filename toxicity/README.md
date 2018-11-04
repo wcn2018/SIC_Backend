@@ -20,7 +20,7 @@ isIdentityHate(String tweetText)
 classify(String tweetText, int version)
 ```
 
-classify(tweetText, 0) is equivalent to isToxic(tweetText), classify(tweetText, 0) = isSevereToxic(tweetText), and so on.
+`classify(tweetText, 0)` is equivalent to `isToxic(tweetText)`, `classify(tweetText, 1)` = `isSevereToxic(tweetText)`, and so on.
 
 Links I used for this project:
 - [Logistic regression with words and char n-grams (Kaggle)](https://www.kaggle.com/tunguz/logistic-regression-with-words-and-char-n-grams)
