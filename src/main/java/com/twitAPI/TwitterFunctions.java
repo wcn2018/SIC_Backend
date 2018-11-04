@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
-
-
+/*
+@author WIlliam Chen for GT hackathon
+@author Jeffery Luo for GT hackathon
+*/
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -87,9 +89,7 @@ public class TwitterFunctions {
         for (int i=0;i<tweets.size();i++) {
             Status a = tweets.get(i);
             String tweet = a.getText();
-            System.out.print("test1");
             if (isOffer(tweet)) {
-                System.out.print("test2");
                 String b = String.valueOf(a.getId());
                 uniTweets.add(b);
             }
@@ -100,7 +100,10 @@ public class TwitterFunctions {
         User user = tweeter2.showUser(handle);
         return user.getName();
     }
-
+/*****************************************8 Start New ***********************************************/
+//s
+//s
+//s
 
     public int gtKeywordRank(String handle)throws TwitterException, IOException{
         List<String> tester = new ArrayList<String>(CAPACITY);
@@ -117,36 +120,87 @@ public class TwitterFunctions {
         if (numKeys>=3){
             return 1;
         }
-
         return 0;
     }
-/*
-    public int rtRank(String handle){
+
+    public int rtRank(String handle) throws TwitterException{
         /*in the future, this function could be expanded quite a bit to contain more relevant accounts, like star
         players on the GT team, etc.
+        It could also contain the retweets themselves later (front end has no time for this atm)
           */
-
-    //}
+        List<Status> allStatuses = new ArrayList<Status>(CAPACITY*3);
+        List<Status> rts = new ArrayList<Status>(CAPACITY*3);
+        List<Status> gtrts = new ArrayList<Status>(CAPACITY);
+        int numrts = 0;
+        //tweetgrabber
+        Paging page = new Paging(1, 20); // grabs max 20 per page
+        int p = 1;
+        while (p <= 3) {
+            page.setPage(p);
+            allStatuses.addAll(tweeter2.getUserTimeline(handle, page));
+            p++;
+        }
+        for (int i = 0;i<=CAPACITY*3;i++){
+            if (allStatuses.get(i).isRetweet()){
+                rts.add(allStatuses.get(i).getQuotedStatus());
+            }
+        }
+        //check if is GT retweet
+        for (int i = 0; i<=CAPACITY;i++){
+            String originalTweeter = rts.get(i).getUser().getScreenName();
+                if (originalTweeter == "TWGrecruiting"||originalTweeter== "GeorgiaTechFB"||originalTweeter== "GTAthletics"){
+                    numrts++;
+                }
+        }
+        //block for returning ranks
+        if (numrts>=6){
+            return 2;
+        }
+        if (numrts>=3){
+            return 1;
+        }
+        return 0;
+    }
+    public boolean followsGT(String handle)throws TwitterException{
+        List<User> following = new ArrayList<User>();
+        following.addAll(tweeter2.getFriendsList(handle, -1));
+        for(int i = 0;i<=following.size();i++){
+            String followHandle = following.get(i).getScreenName();
+            if(followHandle == "TWGrecruiting"||followHandle== "GeorgiaTechFB"||followHandle== "GTAthletics"){
+                return true;
+            }
+        }
+        return false;
+    }
 //interest starts at 50%
-//For each keyword
- /*
+//For each keyword rank or retweet rank, add 5%
+//Adds 30% if following a GT account
+//removes some percent if no retweet or keyword. This is kinda unfair irl but for now it's a way of getting lower numbers
     public int percentFit(String handle)throws TwitterException, IOException{
         int gtRTrank = rtRank(handle);
         int keywordRank = gtKeywordRank(handle);
         int percent = 50;
-        percent += gtRTrank*10 + keywordRank*10;
-        if (keywordRank == 0){
-            percent -= 15;
+        percent += gtRTrank*5 + keywordRank*5;
+        if (followsGT(handle)){
+            percent += 30;
+            }
+        else {
+            if (keywordRank == 0){
+                percent -= 10;
+            }
+            if (gtRTrank == 0){
+                percent -= 10;
+            }
         }
-        if (gtRTrank == 0){
-            percent -= 15;
-        }
-
         return percent;
     }
 
+/****************************************End NEW*********************************************/
+//s
+//s
 
     /************************* Tester Main Block ***************************/
+
     public static void main(String[] args) throws TwitterException, IOException{
         List<Status> list;
         List<Status> list2;
