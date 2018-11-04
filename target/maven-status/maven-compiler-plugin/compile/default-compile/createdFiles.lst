@@ -1,6 +1,12 @@
 com\config\resources\ServerResource.class
 com\config\ServerConfiguration.class
 com\config\resources\ServerResource2.class
+com\toclient\ProfileData.class
 com\config\ServerApplication.class
 com\config\health\TemplateHealthCheck.class
+com\config\resources\ServerResource3.class
 com\config\ServerModule.class
+com\twitAPI\TwitterDriver.class
+com\twitAPI\TwitterFunctions.class
+com\twitAPI\Twitterer.class
+com\toxicity\ToxicityClassifier.class
