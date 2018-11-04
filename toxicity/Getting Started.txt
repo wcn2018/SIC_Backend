@@ -1,0 +1,25 @@
+Getting set up:
+- Install Python
+- Run: pip install numpy pandas sklearn scipy pickle Pyro4
+
+In the appropriate directory,
+python toxic_server.py
+
+Then, you can use ToxicityClassifer.isToxic(String tweetText) and similar functions, to get a probability that the given string is toxic (or has other colorful attributes).
+
+ToxicityClassifer.java has seven methods:
+- isToxic(String tweetText)
+- isSevereToxic(String tweetText)
+- isObscene(String tweetText)
+- isThreat(String tweetText)
+- isInsult(String tweetText)
+- isIdentityHate(String tweetText)
+- classify(String tweetText, int version)
+
+classify(tweetText, 0) is equivalent to isToxic(tweetText), classify(tweetText, 0) = isSevereToxic(tweetText), and so on.
+
+Links I used for this project:
+- https://www.kaggle.com/tunguz/logistic-regression-with-words-and-char-n-grams
+- https://stackabuse.com/scikit-learn-save-and-restore-models/
+- https://alvinalexander.com/java/edu/pj/pj010016
+- and possibly others
