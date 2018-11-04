@@ -1,8 +1,9 @@
 Getting set up:
 - Install Python
 - Run: pip install numpy pandas sklearn scipy pickle Pyro4
+- Download char_vectorizer.pkl from https://drive.google.com/open?id=1mXJczfauF5b3aJhhQy88ESvbheQDfncA into /toxicity
 
-In the appropriate directory,
+In /toxicity,
 python toxic_server.py
 
 Then, you can use ToxicityClassifer.isToxic(String tweetText) and similar functions, to get a probability that the given string is toxic (or has other colorful attributes).
