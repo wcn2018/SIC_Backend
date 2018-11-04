@@ -100,10 +100,6 @@ public class TwitterFunctions {
         User user = tweeter2.showUser(handle);
         return user.getName();
     }
-/*****************************************8 Start New ***********************************************/
-//s
-//s
-//s
 
     public int gtKeywordRank(String handle)throws TwitterException, IOException{
         List<String> tester = new ArrayList<String>(CAPACITY);
@@ -132,7 +128,7 @@ public class TwitterFunctions {
         List<Status> rts = new ArrayList<Status>(CAPACITY*3);
         List<Status> gtrts = new ArrayList<Status>(CAPACITY);
         int numrts = 0;
-        //tweetgrabber
+        //tweetgrabber adapted from Twitterer
         Paging page = new Paging(1, 20); // grabs max 20 per page
         int p = 1;
         while (p <= 3) {
@@ -195,10 +191,15 @@ public class TwitterFunctions {
         return percent;
     }
 
-/****************************************End NEW*********************************************/
+/****************************************Start New*********************************************/
 //s
 //s
-
+    //Next step is code for controversial tweet retrival. front end has run out of time there's no point in adding
+    //this right now.
+    /*****************************************END New ***********************************************/
+//s
+//s
+//s
     /************************* Tester Main Block ***************************/
 
     public static void main(String[] args) throws TwitterException, IOException{
