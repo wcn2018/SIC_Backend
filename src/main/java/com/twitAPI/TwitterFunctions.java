@@ -44,23 +44,26 @@ public class TwitterFunctions {
     public boolean heightOrGrad(User user)throws TwitterException, IOException {
         String bio = user.getDescription();
         boolean height = (bio.contains("6'")||bio.contains("5'"));
-        boolean grad = (bio.contains("2022")||bio.contains("2021")||bio.contains("2020"));//there's gotta be a better way to do this
-        boolean hog = (height||grad);
-        return hog;
+        boolean grad = (bio.contains("2019")||bio.contains("2020")||bio.contains("2021")||bio.contains("2022"));//there's gotta be a better way to do this
+        return (height||grad);
     }
     public List<String> highSchoolOnlyHandles(String bigHandle)throws TwitterException, IOException{
         // a great opportunity to implement more machine learning for identification, but we dont have time
-        List<User> followers = new ArrayList<User>();
-        followers.addAll(tweeter2.getFollowersList(bigHandle,-1, 100));//list of all followers as User objects
-        System.out.print("test1");
-        List<String> handles = new ArrayList<String>();
-        System.out.print("test2");
-        for(int i = 0;i<=49;i++){
+        int numHS = 50;
+        int numScanned = 150;
+        List<User> followers = new ArrayList<User>(150);
+        followers.addAll(tweeter2.getFollowersList(bigHandle,-1, 150));//list of all followers as User objects
+
+        List<String> handles = new ArrayList<String>(numHS);
+        int checker =0;
+        for(int i = 0;i<=numScanned-1;i++){
             User a = followers.get(i);
-            System.out.print("test3");
             if(heightOrGrad(a)){
-                System.out.print("test4");
                 handles.add(a.getScreenName());
+                checker++;
+            }
+            if (checker>numHS){
+                break;
             }
         }
         return handles;
@@ -80,7 +83,7 @@ public class TwitterFunctions {
     /*************** Interest Unis ****************/
     public List<String> getProspects(String handle){ //call per athlete in list of highschool athletes. Finds their prospect schools. Returns tweet text.
         List<Status> tweets = getTweetsByHandle(handle);
-        List<String> uniTweets= new ArrayList<String>();
+        List<String> uniTweets= new ArrayList<String>(10);
         for (int i=0;i<tweets.size();i++) {
             Status a = tweets.get(i);
             String tweet = a.getText();
@@ -93,25 +96,55 @@ public class TwitterFunctions {
         }
         return uniTweets;
     }
-    /*
-    public int gtKeywordRank(String handle){
-
+    public String getName(String handle)throws TwitterException, IOException{
+        User user = tweeter2.showUser(handle);
+        return user.getName();
     }
+
+
+    public int gtKeywordRank(String handle)throws TwitterException, IOException{
+        List<String> tester = new ArrayList<String>(CAPACITY);
+        int numKeys = 0;
+        for (int i = 0; i<=CAPACITY;i++){
+            String string = (String.valueOf(tester.get(i)));
+            if(string.contains("engineering")||string.contains("Tech")||string.contains("Georgia Tech")){//these are some crappy keywords but thye're here as example
+                numKeys++;
+            }
+        }
+        if (numKeys>=6){
+            return 2;
+        }
+        if (numKeys>=3){
+            return 1;
+        }
+
+        return 0;
+    }
+/*
     public int rtRank(String handle){
         /*in the future, this function could be expanded quite a bit to contain more relevant accounts, like star
         players on the GT team, etc.
           */
-    /*
-    }
 
-    public int percentFit(String handle){
+    //}
+//interest starts at 50%
+//For each keyword
+ /*
+    public int percentFit(String handle)throws TwitterException, IOException{
         int gtRTrank = rtRank(handle);
         int keywordRank = gtKeywordRank(handle);
-        int percent = 0;
+        int percent = 50;
+        percent += gtRTrank*10 + keywordRank*10;
+        if (keywordRank == 0){
+            percent -= 15;
+        }
+        if (gtRTrank == 0){
+            percent -= 15;
+        }
 
         return percent;
     }
-    */
+
 
     /************************* Tester Main Block ***************************/
     public static void main(String[] args) throws TwitterException, IOException{
@@ -122,16 +155,17 @@ public class TwitterFunctions {
         //list = tf.getTweetsByHandle("vandyhacks");
 
         List<String> listS = new ArrayList<String>(Twitterer.CAPACITY);
-        List<String> tester = new ArrayList<String>();
-        List<String> testlist = tf.highSchoolOnlyHandles("scoutPROcoach");
+        List<String> tester = new ArrayList<String>(50);
+        /*List<String> testlist = tf.highSchoolOnlyHandles("scoutPROcoach");
         System.out.print(testlist);
         for(int i = 0; i<=testlist.size();i++){
             String handle = testlist.get(i);
             System.out.print(tf.getProspects(handle));
-        }
+        }*/
 
         //System.out.print(tf.getProspects("EscoJamaal"));
-        //tester = (tf.highSchoolOnlyHandles("scoutPROcoach"));
+        tester = (tf.highSchoolOnlyHandles("scoutPROcoach"));
+        System.out.print(tester);
 
         /*for (Status s : list) {
             listS.add(s.getText());

@@ -95,7 +95,5 @@ public class Twitterer {
         follows.add(twitter.getFriendsIDs(handle, -1));
         followers.add(twitter.getFollowersIDs(handle, -1));
     }
-    public void getUniversities(){
 
-    }
 }
