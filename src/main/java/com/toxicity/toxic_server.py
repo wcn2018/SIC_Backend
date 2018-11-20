@@ -93,29 +93,3 @@ def get_features_helper(text):
 # Same as above, but for a single string
 def get_features(string):
 	return get_features_helper([string])
-
-"""
-def test_models():
-	class_names = ['toxic', 'severe_toxic', 'obscene', 'threat', 'insult', 'identity_hate']
-
-	train = pd.read_csv('train.csv').fillna(' ')
-	test = pd.read_csv('test.csv').fillna(' ')
-
-	train_text = train['comment_text']
-	test_text = test['comment_text']
-	all_text = pd.concat([train_text, test_text])
-	
-	train_word_features = word_vectorizer.transform(train_text)
-	test_word_features = word_vectorizer.transform(test_text)
-
-	train_char_features = char_vectorizer.transform(train_text)
-	test_char_features = char_vectorizer.transform(test_text)
-
-	train_features = hstack([train_char_features, train_word_features])
-	test_features = hstack([test_char_features, test_word_features])
-	
-	for i in range(0, 5):
-		score = classifiers[i].score(train_features, train_target)
-		print("Test score: {0:.2f} %".format(100 * score))
-		prediction = classifiers[i].predict(test_features)
-"""

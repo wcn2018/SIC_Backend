@@ -3,44 +3,10 @@ package com.toxicity;
 import java.io.*;
 
 public class ToxicityClassifier {
-    /**static {
-     String startServerCommand = "python toxic_server.py";
-     String s = null;
-
-     try {
-     Process p = Runtime.getRuntime().exec(startServerCommand);
-     BufferedReader stdInput = new BufferedReader(new
-     InputStreamReader(p.getInputStream()));
-     BufferedReader stdError = new BufferedReader(new
-     InputStreamReader(p.getErrorStream()));
-
-     System.out.println("yo1");
-
-     // read the output from the command
-     while ((s = stdInput.readLine()) != null) {
-     System.out.println(s);
-     }
-
-     System.out.println("yo2");
-
-     // read any errors from the attempted command
-     // System.out.println("Here is the standard error of the command (if any):\n");
-     while ((s = stdError.readLine()) != null) {
-     System.out.println(s);
-     }
-
-     System.exit(0);
-     }
-     catch (IOException e) {
-     System.out.println("exception happened - here's what I know: ");
-     e.printStackTrace();
-     System.exit(-1);
-     }
-     }**/
 
     /**
-     * Returns the probability that the given text is problematic.
-     * version = 0 tries to identify the probability toxic
+     * Returns the probability that the given text is (one of six types of) problematic.
+     * version = 0: toxic
      * version = 1: severe_toxic
      * version = 2: obscene
      * version = 3: threat
