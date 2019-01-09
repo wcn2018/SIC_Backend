@@ -1,1 +1,1 @@
-java -jar target\Backend-1.0-SNAPSHOT.jar server Backend.yml
+java -jar target\SIC_Backend-1.0-SNAPSHOT.jar server SIC_Backend.yml

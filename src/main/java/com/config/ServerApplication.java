@@ -34,10 +34,12 @@ public class ServerApplication extends Application<ServerConfiguration> {
     public void run(ServerConfiguration configuration, Environment environment) {
         final ServerResource resource = new ServerResource();
         final ServerResource resource2 = new ServerResource();
+        final ServerResource resource3 = new ServerResource();
         final TemplateHealthCheck healthCheck = new TemplateHealthCheck(configuration.getTemplate());
         environment.healthChecks().register("template", healthCheck);
 
         environment.jersey().register(resource);
         environment.jersey().register(resource2);
+        environment.jersey().register(resource3);
     }
 }
